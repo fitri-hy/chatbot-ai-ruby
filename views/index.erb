@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruby Chatbot AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex justify-center bg-slate-900 w-full py-12 px-4">
+  <div class="w-full flex flex-col items-center max-w-5xl">
+    <h1 class="text-2xl font-extrabold text-center mb-4 text-gray-100">
+      RUBY CHATBOT AI
+    </h1>
+    <div class="flex items-center">
+      <form id="chatForm" class="mb-4">
+        <div class="flex items-center">
+          <input type="text" id="question" name="question" class="text-gray-200 bg-slate-800 border border-slate-700 px-2 py-1 focus:outline-none rounded-md" placeholder="Ask ai ...">
+          <button type="submit" class="ml-2 bg-slate-800 text-white px-4 py-1 rounded-md hover:bg-slate-700 border border-slate-700">Ask</button>
+        </div>
+      </form>
+    </div>
+    <div id="response" class="text-gray-300 min-h-[400px] w-full border border-slate-700 bg-slate-800 p-4 rounded-md relative">
+      <div id="loading" class="flex items-center justify-center hidden">
+      </div>
+    </div>
+    <footer class="w-full py-2 text-center">
+      <span class="text-gray-500">
+        ©2024 <a href="https://hy-tech.my.id" class="text-gray-400 font-semibold">HyTech Group</a>. All Right Reserved.
+      </span>
+    </footer>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#chatForm').submit(function(e){
+        e.preventDefault();
+        var question = $('#question').val();
+        $('#loading').text('Loading...').show();
+        $.post('/chat', { question: question }, function(data){
+          $('#loading').hide();
+          $('#response').html(data.text);
+        })
+        .fail(function() {
+          $('#loading').hide();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
